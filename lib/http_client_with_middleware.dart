@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
@@ -103,9 +102,9 @@ class HttpClientWithMiddleware extends http.BaseClient {
       if (body is String) {
         request.body = body;
       } else if (body is List) {
-        request.bodyBytes = DelegatingList.typed(body);
+        request.bodyBytes = List.castFrom(body);
       } else if (body is Map) {
-        request.bodyFields = DelegatingMap.typed(body);
+        request.bodyFields = Map.castFrom(body);
       } else {
         throw new ArgumentError('Invalid request body "$body".');
       }
