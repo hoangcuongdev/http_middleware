@@ -71,8 +71,8 @@ class HttpClientWithMiddleware extends http.BaseClient {
           {Map<String, String> headers, body, Encoding encoding}) =>
       _sendUnstreamed("PATCH", url, headers, body, encoding);
 
-  Future<Response> delete(url, {Map<String, String> headers}) =>
-      _sendUnstreamed("DELETE", url, headers);
+  // Future<Response> delete(url, {Map<String, String> headers}) =>
+  //     _sendUnstreamed("DELETE", url, headers);
 
   Future<String> read(url, {Map<String, String> headers}) {
     return get(url, headers: headers).then((response) {
@@ -117,7 +117,7 @@ class HttpClientWithMiddleware extends http.BaseClient {
               method: methodFromString(method),
               encoding: encoding,
               body: body,
-              url: url.toString(),
+              uri: url,
               headers: headers ?? <String, String>{},
             ),
           ),

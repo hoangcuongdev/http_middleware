@@ -53,7 +53,7 @@ class HttpWithMiddleware {
   Future<Response> get(url, {Map<String, String> headers}) {
     RequestData data =
         _sendInterception(method: Method.GET, headers: headers, url: url);
-    return _withClient((client) => client.get(data.url, headers: data.headers));
+    return _withClient((client) => client.get(data.uri, headers: data.headers));
   }
 
   Future<Response> post(url,
@@ -64,7 +64,7 @@ class HttpWithMiddleware {
         url: url,
         body: body,
         encoding: encoding);
-    return _withClient((client) => client.post(data.url,
+    return _withClient((client) => client.post(data.uri,
         headers: data.headers, body: data.body, encoding: data.encoding));
   }
 
@@ -76,7 +76,7 @@ class HttpWithMiddleware {
         url: url,
         body: body,
         encoding: encoding);
-    return _withClient((client) => client.put(data.url,
+    return _withClient((client) => client.put(data.uri,
         headers: data.headers, body: data.body, encoding: data.encoding));
   }
 
@@ -88,7 +88,7 @@ class HttpWithMiddleware {
         url: url,
         body: body,
         encoding: encoding);
-    return _withClient((client) => client.patch(data.url,
+    return _withClient((client) => client.patch(data.uri,
         headers: data.headers, body: data.body, encoding: data.encoding));
   }
 
@@ -96,7 +96,7 @@ class HttpWithMiddleware {
     RequestData data =
         _sendInterception(method: Method.DELETE, headers: headers, url: url);
     return _withClient(
-        (client) => client.delete(data.url, headers: data.headers));
+        (client) => client.delete(data.uri, headers: data.headers));
   }
 
   Future<String> read(url, {Map<String, String> headers}) {
@@ -110,13 +110,13 @@ class HttpWithMiddleware {
       {Method method,
       Encoding encoding,
       dynamic body,
-      String url,
+      Uri url,
       Map<String, String> headers}) {
     RequestData data = RequestData(
         method: method,
         encoding: encoding,
         body: body,
-        url: url,
+        uri: url,
         headers: headers ?? <String, String>{});
     middlewares
         ?.forEach((middleware) => middleware.interceptRequest(data: data));
